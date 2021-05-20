@@ -20,18 +20,11 @@ public class CustomerController {
 
 	@Autowired
 	private CustomerService customerService;
-
-	@GetMapping(value = {"","/"})
-	public ModelAndView customer() {
-		return new ModelAndView("index");
-	}
 	
-	
-	@GetMapping("/addSupport")
-	public ModelAndView addSupport() {
-		
-		List<CustomerVO> detailsCustomer = customerService.findall();
-		return new ModelAndView("addSupport","addSupport",new TicketVO()).addObject("detailsCustomer",detailsCustomer);
+	@GetMapping("/viewdetails")
+	public List<CustomerVO> viewDetails(){
+		List<CustomerVO> detailofcustomer = customerService.findall();
+		return detailofcustomer;
 	}
 	
 	

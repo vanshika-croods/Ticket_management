@@ -9,4 +9,8 @@ public interface CustomerService {
 	public CustomerVO insertCustomer(CustomerVO customerVO);
 	
 	public List<CustomerVO> findall();
+
+	
+	public List<CustomerVO> findByCutomerName(String name);
+	
 }

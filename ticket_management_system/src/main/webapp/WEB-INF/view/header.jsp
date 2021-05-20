@@ -68,8 +68,8 @@
 					aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">Custom Utilities:</h6>
-						<a class="collapse-item" href="addSupport">Add
-							Support</a> <a class="collapse-item" href="viewSupport">View
+						<a class="collapse-item" href="addsupport">Add
+							Support</a> <a class="collapse-item" href="viewsupport">View
 							Support</a>
 
 					</div>

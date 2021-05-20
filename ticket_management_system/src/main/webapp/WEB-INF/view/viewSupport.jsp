@@ -32,6 +32,8 @@
 <link
 	href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css"
 	rel="stylesheet" type="text/css">
+<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.min.css'></link>  
+
 
 <!--These jQuery libraries for select2 
   
@@ -62,11 +64,12 @@
         <thead>
             <tr>
                 <th>Sr. No</th>
-               <th>Customer Name</th>
+                <th>Customer Name</th>
                 <th>Customer Email</th> 
                 <th>Ticket title</th>
-                <th>Ticket Description</th>
                 <th>Ticket Date</th>
+                <th>Action</th>
+                
                 
             </tr>
         </thead>
@@ -136,7 +139,11 @@
 		src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js">
 		
 	</script>
+	<script src="https://kit.fontawesome.com/9d7f96e3ec.js" crossorigin="anonymous"></script>
+	
 	<script src="/assests/dropzone-5.7.0/dist/dropzone.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.all.min.js"></script>  
+	
 <script>
 	$(document).ready(function(){
 		
@@ -161,32 +168,34 @@
   		},
   		 columns :[
              {
-             data : 'ticket_id'
+             data : 'ticketId'
              },
             {
-                 data : 'ticket_id'
+                 data : 'ticketId'
              },
              {
-                 data : 'ticket_id'
+                 data : 'ticketId'
              },
               
             {
                  data : 'ticketTitle'
             },
-             {
-                 data : 'ticketDescription'
-             },
+             
              {
              data : 'ticketDate'
+             },
+             {
+            	 data:'ticketId'
              }],
           columnDefs: [{
         	  
                   targets: 0,
-                  title: "id",
+                  title: "ticketId",
                   orderable: !1,
                   render: function (a, e, t, n) 
                   {
-                     return n.row + n.settings._iDisplayStart + 1;
+                	 var l='<a href="/listsupport/'+t.ticketId+'" class="">'+(n.row + 1)+'</a>';
+                     return l;
                   }
               
           },
@@ -199,9 +208,9 @@
             	 if(t.customerVO!=null){
             		 return t.customerVO.custromerName;	 
             	 }
-            	 else{
+            	  else{
             		 return "-";
-            	 }
+            	 } 
                  
               }
           
@@ -215,15 +224,69 @@
         	  if(t.customerVO!=null){
         		  return t.customerVO.customerEmail;	 
          	 }
-         	 else{
+         	else{
          		 return "-";
          	 }
              
           }
       
-  }],
+      },
+  
+      {
+    	  
+          targets: 5,
+          title: "Actions",
+          orderable: !1,
+          render: function (a, e, t, n) 
+          {
+        	 /*  var l='<a onclick="deleteContactDetail(';
+        	  l+=t.ticket_id;
+        	  l+=')" href="JavaScript:Void(0);"><i class="fa fa-trash"></i> </a>';
+        	  console.log(l);
+             return l; *///return n.row + n.settings._iDisplayStart + 1;
+             var action;
+             action='<a href="/editCustomer/' + t.ticketId + '"> <i class="fa fa-edit"></i></a>'+
+             '<a onclick="deleteCustomerDetail('+t.ticketId+')" href="JavaScript:Void(0);"><i class="fa fa-trash"></i>';
+             
+             return action;
+             
+            /*  action += '\n<a href="/manufacturing/' + t.type + '/' + t.manufacturingId + '/edit" class="m-portlet__nav-link btn m-btn m-btn--hover-info m-btn--icon m-btn--icon-only m-btn--pill" title="Edit"> <i class="fa fa-edit"></i></a>\n'
+       		 action += '\n<button  onclick="deleteManufacturing(' + t.manufacturingId + ',`' + t.type + '`)"> <i class="fa fa-trash"></i></button>\n'
+ */          
+ 		}
+      
+      
+      }],
 		})
 	})
+	
+	    function deleteCustomerDetail(ticketId) {
+        console.log("deleteeeeeeeeeeesdesfsdf")
+        var u = '/ticket/' + ticketId + '/delete';
+        swal({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            type: "warning",
+            showCancelButton: !0,
+            confirmButtonText: "Yes, delete it!"
+        }).then(function (e) {
+            if (e.value) {
+                
+                   e.value && u != '' ? window.location.href = u : console.error("CROODS: data-url undefined ")
+                
+            }
+
+
+        })
+    }
+	
+	/* {
+        targets: 1,
+        orderable: !1,
+        render: function (a, e, t, n) {
+            return moment(a).format('DD-MM-YYYY');
+        }
+    },  */
 
 	</script>
 

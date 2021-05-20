@@ -21,10 +21,10 @@ import lombok.Setter;
 public class TicketVO {
 	
 	@Id
-	@Column
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 
-	private int ticket_id;
+	@Column(name="ticket_id")
+	private long ticketId;
 	
 	@Column(name="ticket_date")
 	private String ticketDate;

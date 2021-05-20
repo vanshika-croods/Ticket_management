@@ -7,32 +7,22 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
 
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
-@Table(name="customer_tbl")
+@Table(name="customer_table")
 public class CustomerVO {
 	
-	public CustomerVO(String custromerName, String customerMobNo, String customerEmail) {
-		super();
-		this.custromerName = custromerName;
-		this.customerMobNo = customerMobNo;
-		this.customerEmail = customerEmail;
-	}
 
 	@Id
-	@Column
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	
-	private int customer_id;
+	@Column(name="customer_id")
+	private long customerId;
 	
 	@Column(name="customer_name")
 	private String custromerName;
