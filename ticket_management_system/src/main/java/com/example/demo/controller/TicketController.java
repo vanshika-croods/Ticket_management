@@ -141,13 +141,21 @@ public class TicketController {
 
 	//edit ticketSupport
 	
-	@GetMapping("editCustomer/{ticketId}")
-	public ModelAndView editCustomer(@PathVariable long ticketId) {
-		ModelAndView view = new ModelAndView();
-		view.setViewName("editSupport");
+	
+	/**
+	 * whenever we call method through ajax and 
+	 * get set of data not any page then always use responsebody annotation
+	 * @param ticketId
+	 * @return
+	 */
+	@GetMapping("editticket/{ticketId}")
+	@ResponseBody
+	public TicketVO editCustomer(@PathVariable long ticketId) {
+		//ModelAndView view = new ModelAndView();
+		//view.setViewName("viewSupport");
 		TicketVO listSuppoprt = ticketService.findById(ticketId);
-		view.addObject("editSupport", listSuppoprt);
-		return view;
+		//view.addObject("viewSupport", listSuppoprt);
+		return listSuppoprt;
 	}
 	
 }

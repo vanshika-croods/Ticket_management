@@ -33,7 +33,25 @@
 	href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css"
 	rel="stylesheet" type="text/css">
 <link rel="stylesheet" href="/assests/css/style.css">
-
+<style>
+	
+	.select2-container{display: block;
+    width: 100% !important;
+    height: calc(1.5em + .75rem + 2px);
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #6e707e;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #d1d3e2;
+    border-radius: .35rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+.select2-container--default .select2-selection--single{border:none;}
+.select2-container--default .select2-selection--single .select2-selection__arrow{height:34px;}
+</style>
 
 <!--These jQuery libraries for select2 
   
@@ -61,7 +79,7 @@
 				<div class="col-lg-7 container">
 					<div class="p-7 m-3">
 						<div class="text-center">
-							<h1 class="h4 text-gray-900 mb-4">Add Support Here</h1>
+							<h1 class="h4 text-gray-900 font-weight-bold mb-4">Add Support Here</h1>
 						</div>
 						<form class="user" action="saveticket" method="POST" class="dropzone" id="file_upload"
 											class="dropzone needsclick dz-clickable"
@@ -69,30 +87,28 @@
 
 							<div class="form-group row">
 								<div class="col-sm-6">
-									<div class="form-group" style="width: 270px;margin-top:10px">
 										<label>Select Customer</label> 
 										<select id='mySelect2' name="customerVO.customerId" class="form-control">
 											<option value='0'>CustomerName</option>
 											
 									    </select>
-									</div>
 								</div>
 								<!-- add class=form-control in select2 -->
 								<div class="col-sm-6">
 									<label for="title">Enter Ticket title</label> <input
 										type="text" class="form-control" id="exampleTextInput"
-										placeholder="Enter Ticket Title" name="ticketTitle" style="margin-top:10px; width: 270px;">
+										placeholder="Enter Ticket Title" name="ticketTitle">
 								</div>
 							</div>
 
 							<div class="form-group row">
-								<div class="form-group" style="width: 100%; height: 10%;">
+								<div class="col-md-12">
 									<label for="ticketDescription">Enter Ticket Description</label>
 									<textarea class="form-control" name="ticketDescription"></textarea>
 								</div>
 							</div>
 							<div class="form-group row">
-								<div class="form-group">
+								<div class="col-md-12">
 									<label>Choose a File From Here</label> <input type="file" name="file" class="form-control text-center">
 								</div>
 								
@@ -100,7 +116,6 @@
 							<!-- <a href="#" class="btn btn-primary btn-user btn-block">
 								Submit </a> -->
 							<button type="submit" value="submit" class="btn btn-primary btn-user btn-block">Submit</button>
-							<hr>
 
 						</form>
 

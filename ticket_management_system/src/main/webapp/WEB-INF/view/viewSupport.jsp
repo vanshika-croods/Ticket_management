@@ -33,7 +33,11 @@
 	href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css"
 	rel="stylesheet" type="text/css">
 <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.min.css'></link>  
-
+<style>
+	.edit-btn i, .del-btn i{font-size:14px !important;}
+	.edit-btn, .del-btn{height:30px;width:30px;padding:3px;line-height:24px;text-align:center;}
+	.edit-btn{margin-right:5px;}
+</style>
 
 <!--These jQuery libraries for select2 
   
@@ -82,7 +86,45 @@
 			</div>
 
 			<!-- End of Main Content -->
+			<!-- start of Bootstrap Modal -->
+	<div class="modal fade" id="editmodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit Ticket Support</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+       <form action="saveticket" method="POST">
+        <div class="mb-3">
+        <label for="customername">select customerName</label>
+            <select id='mySelect2'  style='width: 400px;'>
+				<option value=""></option>
+			</select>
 
+          </div>
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label">Ticket Title:</label>
+            <input type="text" class="form-control" id="ticketTitle" name="ticketTitle">
+          </div>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">Ticket Description:</label>
+            <textarea class="form-control" id="ticketDescription" name="ticketDescription"></textarea>
+          </div>
+          <input type="hidden" id="ticketId" name="ticketId">
+      <div class="modal-footer">
+				<button type="submit" value="submit" class="form-submit btn-primary">Submit</button>
+		</div>
+	</form>
+		
+      </div>
+		
+    </div>
+    
+  </div>
+</div>
+			
+			<!-- end of bootstrap modal -->
 			<!-- Footer -->
 			<jsp:include page="footer.jsp"></jsp:include>
 			<!-- End of Footer -->
@@ -232,21 +274,19 @@
       
       },
   
-      {
+  
+ 	   {
     	  
           targets: 5,
           title: "Actions",
           orderable: !1,
+          class: "text-center",
           render: function (a, e, t, n) 
           {
-        	 /*  var l='<a onclick="deleteContactDetail(';
-        	  l+=t.ticket_id;
-        	  l+=')" href="JavaScript:Void(0);"><i class="fa fa-trash"></i> </a>';
-        	  console.log(l);
-             return l; *///return n.row + n.settings._iDisplayStart + 1;
+        	 
              var action;
-             action='<a href="/editCustomer/' + t.ticketId + '"> <i class="fa fa-edit"></i></a>'+
-             '<a onclick="deleteCustomerDetail('+t.ticketId+')" href="JavaScript:Void(0);"><i class="fa fa-trash"></i>';
+             action='<button type="button" class="btn btn-primary edit-btn" onclick="editticket(' +t.ticketId+ ')" data-toggle="modal" data-target="#editmodal" data-whatever="@mdo" ><i class="fas fa-user-edit"></i></button>'+
+             '<a onclick="deleteCustomerDetail('+t.ticketId+')"  class="btn btn-danger del-btn"  href="JavaScript:Void(0);"><i class="fa fa-trash-alt"></i>';
              
              return action;
              
@@ -257,8 +297,50 @@
       
       
       }],
-		})
 	})
+	  $("#mySelect2").select2({
+	      placeholder: "Search CustomerName",
+	      allowClear: 1,
+	      ajax: {
+	          url: "/customer/select/json",
+	          dataType: "json",
+	          type: "GET",
+	          delay: 250,
+	          data: function (e) {
+	              return {
+	                  customerName: e.term,
+	                  page: e.page,
+	                  
+	              }
+	          },
+	          processResults: function (e, t) {
+	              return t.page = t.page || 1, {
+	                  results: e.items,
+	                  pagination: {
+	                      more: 30 * t.page < e.total_count
+	                  }
+	              }
+	          },
+	          cache: !0
+	      },
+	      escapeMarkup: function (markup) {
+	          return markup;
+	      },
+	      
+	      minimumInputLength: 3,
+	      templateResult: function (e) {
+
+	          if (e.loading) return e.text;
+
+	          return e.text
+	      },
+	      templateSelection: function (data, container) {
+	          return data.text;
+	      }
+	  });
+
+		
+})
 	
 	    function deleteCustomerDetail(ticketId) {
         console.log("deleteeeeeeeeeeesdesfsdf")
@@ -280,6 +362,24 @@
         })
     }
 	
+	function editticket(ticketId){
+		$.ajax({
+			type:"GET",
+			url:"/editticket/"+ticketId,
+			success:function(data){
+				//alert("data here");
+				$("#ticketId").val(data.ticketId);
+				$("#ticketTitle").val(data.ticketTitle);
+				$("#ticketDescription").val(data.ticketDescription);
+				
+				var ticketSelect=$('#mySelect2');
+				 var option = new Option(data.customerVO.custromerName, data.customerVO.customerId, true, true);
+				 ticketSelect.append(option).trigger('change');
+			}
+		})
+	}
+	
+
 	/* {
         targets: 1,
         orderable: !1,

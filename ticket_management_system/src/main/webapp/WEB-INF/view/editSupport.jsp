@@ -104,8 +104,7 @@
 											</div>
 										
 											<div class="form-group">
-												<input type="submit" name="submit" id="submit"
-													class="form-submit" value="Update" />
+												<button type="submit" value="submit" class="form-submit">Submit</button>
 											</div>
 									
 										</form>
